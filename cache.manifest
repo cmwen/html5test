@@ -11,4 +11,4 @@ templates/tab-triggers.html
 templates/tabs.html
 templates/trigger-detail.html
 lib
-css
+css/style.css
