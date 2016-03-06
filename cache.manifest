@@ -3,12 +3,3 @@ CACHE MANIFEST
 
 CACHE:
 index.html
-js/app.js
-js/controllers.js
-js/services.js
-templates/tab-settings.html
-templates/tab-triggers.html
-templates/tabs.html
-templates/trigger-detail.html
-lib
-css/style.css
