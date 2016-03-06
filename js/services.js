@@ -1,10 +1,10 @@
 angular.module('starter.services', [])
-.factory('Maker', function($http, Settings) {
+.factory('Maker', function($http, Locations, Settings) {
   // TODO more format?
   function replaceValue(value) {
     if (value) {
       if (value == "Location") {
-        var position = Settings.data(IFTTT.CURRENT_LOCATION);
+        var position = Locations.position();
 
         return position.coords.latitude + "," + position.coords.longitude;
       } else if (value == "Time") {
@@ -53,6 +53,7 @@ angular.module('starter.services', [])
 
   var TRIGGERS_DATA = "triggers";
   var MAKER_KEY = "maker_key";
+  var CURRENT_POSITION_KEY = "currentPosition";
   var rev = 0;
   return {
     events : function( /**/ events) {
@@ -61,6 +62,20 @@ angular.module('starter.services', [])
         result = JSON.parse(localStorage.getItem(EVENTS_KEY));
       } else {
         result = localStorage.setItem(EVENTS_KEY, JSON.stringify(events));
+      }
+
+      if (!result) {
+        result = [];
+      }
+      return result;
+    },
+
+    position : function( /**/ position) {
+      var result;
+      if (position === undefined) {
+        result = JSON.parse(localStorage.getItem(CURRENT_POSITION_KEY));
+      } else {
+        result = localStorage.setItem(CURRENT_POSITION_KEY, JSON.stringify(position));
       }
 
       if (!result) {
@@ -138,51 +153,45 @@ angular.module('starter.services', [])
     }
   };
 })
-.factory('Chats', function() {
-  // Might use a resource here that returns a JSON array
 
-  // Some fake testing data
-  var chats = [{
-    id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'img/ben.png'
-  }, {
-    id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'img/max.png'
-  }, {
-    id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'img/adam.jpg'
-  }, {
-    id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'img/perry.png'
-  }, {
-    id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'img/mike.png'
-  }];
-
-  return {
-    all: function() {
-      return chats;
-    },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
-    },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
-        }
+.factory('Locations', function($http) {
+  var cachePosition;
+  var MAX_RETRY = 3; // retry 3 times to get more accuracy
+  var ACCURACY = 5; // meter
+  function getPosition(times) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      if (position.coords.accuracy && position.coords.accuracy < ACCURACY
+        || times > MAX_RETRY) {
+          cachedPosition = position;
+          var url = 'http://nominatim.openstreetmap.org/reverse?format=json&lat=' + position.coords.latitude + '&lon=' + position.coords.longitude + '&zoom=18&addressdetails=1';
+          $http(
+            {
+              url: url,
+              type: 'json'
+            }).then(function successCallback(response) {
+              console.log(response);
+              // this callback will be called asynchronously
+              // when the response is available
+            }, function errorCallback(response) {
+              console.log(response);
+              // called asynchronously if an error occurs
+              // or server returns response with an error status.
+            });
+          // TODO show a warning when the accuracy is still not statisfied.
+      } else {
+        getPosition(++times);
       }
-      return null;
+    }, function(error) {
+      console.log(error);
+    }, {
+      enableHighAccuracy: true
+    });
+  };
+
+  getPosition(0);
+  return {
+    position: function() {
+      return cachedPosition;
     }
   };
 });

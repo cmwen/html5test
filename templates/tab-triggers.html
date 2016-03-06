@@ -3,6 +3,7 @@
     <ion-list>
       <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="trigger in triggers" type="item-text-wrap" href="#" ng-click="fire(trigger)">
         <h2>{{trigger.event}}</h2>
+        <p>{{trigger.value1}} {{trigger.value2}} {{trigger.value3}}</p>
         <i class="icon ion-chevron-right icon-accessory"></i>
 
         <ion-option-button class="button-calm" ng-click="edit(trigger)">
