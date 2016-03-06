@@ -1,0 +1,30 @@
+<ion-view view-title="Triggers">
+  <ion-content>
+    <ion-list>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="trigger in triggers" type="item-text-wrap" href="#" ng-click="fire(trigger)">
+        <h2>{{trigger.event}}</h2>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+
+        <ion-option-button class="button-calm" ng-click="edit(trigger)">
+          Edit
+        </ion-option-button>
+        <ion-option-button class="button-assertive" ng-click="remove(trigger)">
+          Delete
+        </ion-option-button>
+      </ion-item>
+
+      <div class="item item-divider">
+        Actions
+      </div>
+      <a class="item item-icon-left item-icon-right" href="#/tab/triggers/new">
+        <i class="icon ion-star"></i>
+          Add a trigger
+        <i class="icon ion-plus"></i>
+      </a>
+
+      <button class="button button-block button-stable" ng-click="deleteAllTriggers()">
+        Delete all Triggers
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-view>

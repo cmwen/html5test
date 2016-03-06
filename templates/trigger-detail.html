@@ -1,0 +1,44 @@
+<ion-view view-title="Trigger Settings">
+  <ion-content>
+    <ion-list>
+      <label class="item item-input item-select">
+        <span class="input-label">Event</span>
+        <input type="text" placeholder="Enter event name here" ng-model="trigger.event">
+        <select ng-model="trigger.event">
+          <option ng-repeat="event in events">{{event}}</option>
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <span class="input-label">Value1</span>
+        <input type="text" placeholder="Enter event name here" ng-model="trigger.value1">
+        <select ng-model="trigger.value1">
+          <option ng-repeat="value in values">{{value}}</option>
+          <option>Location</option>
+          <option selected>Time</option>
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <span class="input-label">Value2</span>
+        <input type="text" placeholder="Enter event name here" ng-model="trigger.value2">
+        <select ng-model="trigger.value2">
+          <option ng-repeat="value in values">{{value}}</option>
+          <option>Location</option>
+          <option selected>Time</option>
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <span class="input-label">Value3</span>
+        <input type="text" placeholder="Enter event name here" ng-model="trigger.value3">
+        <select ng-model="trigger.value3">
+          <option ng-repeat="value in values">{{value}}</option>
+          <option>Location</option>
+          <option selected>Time</option>
+        </select>
+      </label>
+
+      <button class="button button-block button-stable" ng-click="onSave()">
+        Save
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-view>

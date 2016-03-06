@@ -1,0 +1,35 @@
+<ion-view view-title="Settings">
+  <ion-content>
+    <ion-list>
+      <div class="item item-divider">
+        Maker
+      </div>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Key</span>
+        <input type="text" placeholder="Enter maker key here" ng-model="settings.makerKey" ng-change="onKeyChange()">
+      </label>
+    <div class="item item-divider">
+      Event
+    </div>
+    <div class="item item-input-inset">
+      <label class="item-input-wrapper">
+        <input type="text" placeholder="Enter event name here" ng-model="settings.eventName">
+      </label>
+      <button class="button button-small" ng-click="addEvent()">
+        Add
+      </button>
+    </div>
+
+    <ion-item class="item-remove-animate item-icon-right" ng-repeat="event in events" type="item-text-wrap" href="#">
+      {{event}}
+      <i class="icon ion-chevron-right icon-accessory"></i>
+
+      <ion-option-button class="button-assertive" ng-click="remove(event)">
+        Delete
+      </ion-option-button>    </ion-item>
+    <ion-toggle  ng-model="settings.enableFriends">
+        Enable Friends
+    </ion-toggle>
+    </ion-list>
+  </ion-content>
+</ion-view>
